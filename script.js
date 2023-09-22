@@ -1,16 +1,32 @@
 // Declare global variables
-let numRows = 0;
-let numCols = 0;
+let numRows = 2;
+let numCols = 2;
 let colorSelected; 
+for(let i = 0; i < numRows; i++) {
+    const newRow = grid.insertRow(0);
+    for (let j = 0; j < numCols; j++) {
+        const cell = newRow.insertCell(j);
+    }
+}
 
 // Add a row
 function addR() {
-    alert("Clicked Add Row"); // Replace this line with your code.
+    numRows += 1;
+    const new_row = document.createElement('tr');
+    grid.appendChild(new_row);
+    for (let i = 0; i < numCols; i++){
+        const new_col = document.createElement('td'); 
+        new_row.appendChild(new_col);
+    }
 }
 
 // Add a column
 function addC() {
-    alert("Clicked Add Col"); // Replace this line with your code.
+    numCols++;
+    for (let i = 0; i < numRows; i++) {
+        const new_col = document.createElement('td'); 
+        grid.rows[i].appendChild(new_col);
+    }
 }
 
 // Remove a row
@@ -42,4 +58,8 @@ function fillAll(){
 // Clear all cells
 function clearAll(){
     alert("Clicked Clear All"); // Replace this line with your code.
+}
+
+function printGrid() {
+    console.log(1);
 }
