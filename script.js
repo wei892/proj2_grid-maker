@@ -3,9 +3,11 @@ let numRows = 2;
 let numCols = 2;
 let colorSelected;
 printGrid()
+let all_rows = document.querySelectorAll('tr');
 
 // Add a row
 function addR() {
+    if(numCols == 0) numCols++;
     numRows += 1;
     const new_row = document.createElement('tr');
     grid.appendChild(new_row);
@@ -16,18 +18,26 @@ function addR() {
             new_col.style.backgroundColor = colorSelected;
         };
     }
+    console.log("row: " + numRows + " cols: " + numCols);
 }
 
 // Add a column
 function addC() {
+    if(numRows == 0) {
+        numRows += 1;
+        const new_row = document.createElement('tr');
+        grid.appendChild(new_row);
+    }
     numCols++;
+    const all_rows = document.querySelectorAll('tr');
     for (let i = 0; i < numRows; i++) {
         const new_col = document.createElement('td'); 
-        grid.rows[i].appendChild(new_col);
+        all_rows[i].appendChild(new_col);
         new_col.onclick = function () {
             new_col.style.backgroundColor = colorSelected;
         };
     }
+    console.log("row: " + numRows + " cols: " + numCols);
 }
 
 // Remove a row
@@ -37,6 +47,8 @@ function removeR() {
         all_row[numRows-1].remove();
         numRows--;
     }
+    if(numRows == 0) numCols = 0;
+    console.log("row: " + numRows + " cols: " + numCols);
 }
 
 // Remove a column
@@ -44,12 +56,20 @@ function removeC() {
     if(numCols > 0) {
         let all_rows = document.querySelectorAll('tr');
         for(let i = 0; i < all_rows.length; i++) {
-            let last_column = all_rows[i].lastElementChild;
+            let last_column = all_rows[i].lastChild;
             all_rows[i].removeChild(last_column);
         }
         numCols--;
-        console.log(numCols);
+        if (numCols == 0) {
+            numRows = 0;
+            let all_rows = document.querySelectorAll('tr');
+            all_rows.forEach(function (row) {
+                row.remove();
+            });
+        }
     }
+    if(numCols == 0) numRows = 0;
+    console.log("row: " + numRows + " cols: " + numCols);
 }
 
 // Set global variable for selected color
