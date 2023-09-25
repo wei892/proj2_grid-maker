@@ -1,13 +1,8 @@
 // Declare global variables
 let numRows = 2;
 let numCols = 2;
-let colorSelected; 
-for(let i = 0; i < numRows; i++) {
-    const newRow = grid.insertRow(0);
-    for (let j = 0; j < numCols; j++) {
-        const cell = newRow.insertCell(j);
-    }
-}
+let colorSelected;
+printGrid()
 
 // Add a row
 function addR() {
@@ -17,6 +12,9 @@ function addR() {
     for (let i = 0; i < numCols; i++){
         const new_col = document.createElement('td'); 
         new_row.appendChild(new_col);
+        new_col.onclick = function () {
+            new_col.style.backgroundColor = colorSelected;
+        };
     }
 }
 
@@ -26,6 +24,9 @@ function addC() {
     for (let i = 0; i < numRows; i++) {
         const new_col = document.createElement('td'); 
         grid.rows[i].appendChild(new_col);
+        new_col.onclick = function () {
+            new_col.style.backgroundColor = colorSelected;
+        };
     }
 }
 
@@ -33,7 +34,7 @@ function addC() {
 function removeR() {
     if(numRows > 0) {
         let all_row = document.querySelectorAll('tr');
-        all_row[0].remove();
+        all_row[numRows-1].remove();
         numRows--;
     }
 }
@@ -59,19 +60,39 @@ function selectColor(){
 
 // Fill all uncolored cells
 function fillU(){
-    alert("Clicked Fill All Uncolored"); // Replace this line with your code.
+    const all_cells = document.querySelectorAll('td');
+    all_cells.forEach(function (td) {
+        if(!td.style.backgroundColor || td.style.backgroundColor == 'white')
+        td.style.backgroundColor = colorSelected;
+    });
 }
 
 // Fill all cells
 function fillAll(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+    const all_cells = document.querySelectorAll('td');
+    all_cells.forEach(function (td) {
+        td.style.backgroundColor = colorSelected;
+    });
 }
 
 // Clear all cells
 function clearAll(){
-    alert("Clicked Clear All"); // Replace this line with your code.
+    const all_cells = document.querySelectorAll('td');
+    all_cells.forEach(function (td) {
+        td.style.backgroundColor = 'white';
+    });
 }
 
 function printGrid() {
-    console.log(1);
+    for(let i = 0; i < numRows; i++) {
+        const new_row = document.createElement('tr');
+        grid.appendChild(new_row);
+        for (let j = 0; j < numCols; j++) {
+            const new_col = document.createElement('td'); 
+            new_row.appendChild(new_col);
+            new_col.onclick = function () {
+                new_col.style.backgroundColor = colorSelected;
+            };
+        }
+    }
 }
