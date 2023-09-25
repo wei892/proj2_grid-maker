@@ -31,12 +31,24 @@ function addC() {
 
 // Remove a row
 function removeR() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
+    if(numRows > 0) {
+        let all_row = document.querySelectorAll('tr');
+        all_row[0].remove();
+        numRows--;
+    }
 }
 
 // Remove a column
 function removeC() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+    if(numCols > 0) {
+        let all_rows = document.querySelectorAll('tr');
+        for(let i = 0; i < all_rows.length; i++) {
+            let last_column = all_rows[i].lastElementChild;
+            all_rows[i].removeChild(last_column);
+        }
+        numCols--;
+        console.log(numCols);
+    }
 }
 
 // Set global variable for selected color
